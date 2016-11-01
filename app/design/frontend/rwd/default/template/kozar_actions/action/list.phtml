@@ -1,0 +1,42 @@
+<?php /* @var $this Kozar_Actions_Block_Action_List*/?>
+<?php
+$helper = Mage::helper('kozar_actions');
+$actions = $this->getCollection();
+?>
+<div class="pager">
+    <?php echo $this->getPagerHtml(); ?>
+</div>
+<h1 class="actions-title">Action</h1>
+<div>
+    <ol class="actions-list">
+        <?php foreach ($actions as $action): ?>
+            <?php $action->getActionUrl(); ?>
+            <li>
+                <img class="action-image" src="<?php echo $helper->getImageUrl($action->getImage(), 200, 200) ?>">
+                <div class="action-shop">
+                    <div>
+                        <h2 class="action-name">
+                            <a href="<?php echo $action->getActionUrl();?>">
+                                <?php echo $action->getName(); ?>
+                            </a>
+                        </h2>
+                    </div>
+                    <div class="action-item">
+                        <div class="action-desc">
+                            <?php echo $this->__('Description:') ?> <?php echo $this->escapeHtml($action->getShortDescription())?>
+                        </div>
+                        <div class="action-time">
+                            <p><?php echo $this->__('Start:') ?> <?php echo $this->escapeHtml(Mage::getSingleton('core/date')->date(null, $action->getStartDatetime()))?></p>
+                            <p><?php if($action->getEndDatetime() !== null) echo $this->__('End: ') . $this->escapeHtml(Mage::getSingleton('core/date')->date(null, $action->getEndDatetime()))?></p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+        <?php endforeach; ?>
+    </ol>
+</div>
+<div class="pager">
+    <?php echo $this->getPagerHtml(); ?>
+</div>
+

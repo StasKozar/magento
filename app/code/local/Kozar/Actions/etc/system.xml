@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <tabs>
+        <kozar_actions translate="label" module="kozar_actions">
+            <label>Kozar_Actions Extension</label>
+            <sort_order>100</sort_order>
+        </kozar_actions>
+    </tabs>
+    <sections>
+        <kozar_actions translate="label" module="kozar_actions">
+            <label>Extension Options</label>
+            <tab>Kozar Action</tab>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+
+            <groups>
+                <kozar_actions_group translate="label" module="kozar_actions">
+                    <label>My Extension Options</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+
+                    <fields>
+                        <kozar_actions_input translate="label">
+                            <label>My Input Field: </label>
+                            <comment>My Comment</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </kozar_actions_input>
+                        <kozar_actions_select translate="label">
+                            <label>My Dropdown: </label>
+                            <comment>Source model provider Magento's default Yes/No values</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </kozar_actions_select>
+                    </fields>
+                </kozar_actions_group>
+            </groups>
+        </kozar_actions>
+    </sections>
+</config>

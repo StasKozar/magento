@@ -1,0 +1,79 @@
+.actions-title h1 {
+  border-bottom: none;
+}
+
+.action-image {
+  margin-bottom: $b-margin-bottom;
+  float: left;
+}
+
+.actions-list .action-name {
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  font-family: $f-stack-special;
+  a {
+    font-weight: 500;
+  }
+}
+
+.actions-list .action-shop {
+  float: right;
+  width: percentage(2/3);
+  padding-left: ($box-spacing * 2);
+
+  .desc {
+    margin-top: $element-spacing;
+    float: left;
+    width: 65%;
+    overflow: hidden;
+  }
+
+}
+
+.actions-list {
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  & > li {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid $c-module-border-light;
+
+    &:after {
+      @include clearfix;
+    }
+    .product-image {
+      float: left;
+      width: percentage(1/3);
+
+      img {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+  }
+  & > li:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+}
+
+.pager {
+  margin-bottom: 20px;
+  border: 2px solid #b0b0b0;
+  background-color: lightgrey;
+}
+
+.action-time {
+  margin-top: 20px;
+  color: $c-green;
+  display: block;
+  font-family: $f-stack-sans;
+}
+
+.action-to-product-name a {
+  text-align: center;
+  margin-bottom: 5px;
+  font-family: $f-stack-special;
+  text-transform: uppercase;
+}

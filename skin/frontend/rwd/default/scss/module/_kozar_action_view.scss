@@ -1,0 +1,173 @@
+.action-name {
+  color: $c-action;
+  margin-bottom: 10px;
+  border: 0;
+  display: block;
+  text-align: center;
+}
+
+.actions-list {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.action-image {
+  margin: 20px;
+  float: left;
+  display: block;
+}
+
+.action-desc {
+  font-family: $f-stack-special;
+}
+
+.action-time {
+  margin-top: 20px;
+  color: $c-green;
+  display: block;
+  font-family: $f-stack-sans;
+}
+
+.rel-products {
+  position: relative;
+}
+
+.rel-products-top {
+  margin-top: 200px;
+  text-align: center;
+  padding-bottom: 0;
+  padding-top: 0;
+  font-family: $f-stack-sans;
+}
+
+.rel-products:after {
+  @include clearfix;
+}
+
+.rel-products > li {
+  position: relative;
+  margin-bottom: $product-column-spacing;
+  text-align: center;
+
+  &:after {
+    @include clearfix;
+  }
+}
+
+.rel-products .product-image {
+  width: 40%;
+  margin-bottom: 15px;
+}
+
+.rel-products .product-image img {
+  width: 100%;
+  height: auto;
+
+  &:hidden {
+    display: none;
+  }
+}
+
+.rel-products .product-image {
+  width: 40%;
+  margin-bottom: 15px;
+  margin-left: 10%;
+}
+
+
+// If the height of the .product-info element changes, this value should be adjusted
+$productsGridActionHeight: 85px;
+
+.rel-products .product-info {
+  float: left;
+  position: relative;
+  padding-bottom: $productsGridActionHeight + 10px;
+}
+
+.rel-products .product-name {
+  text-align: center;
+  padding-bottom: 0;
+  padding-top: 0;
+  font-weight: 500;
+  font-size: $f-size-l;
+  font-family: $f-stack-sans;
+}
+
+// ---------------------------------------------
+
+/* Config: Two columns + flexible gutter */
+
+// Container: 480 - (2 * 20 trim) = 440
+// Math: (440 - (20 gutter)) / 2 items = 210
+
+.rel-products > li {
+  float: left;
+  width: percentage(210 / 440);
+  margin-right: percentage(20 / 440);
+}
+
+.rel-products > li:nth-child(odd) {
+  clear: left;
+}
+
+.rel-products > li:nth-child(even) {
+  margin-right: 0;
+}
+
+.rel-products .product-image {
+  margin-bottom: 5px;
+
+  @include loadingOverlay();
+}
+
+// ---------------------------------------------
+
+@include bp(min-width, $bp-xsmall + 1) {
+  /* Config: Three columns + flexible gutter */
+  // Container: 600 - (2 * 30 trim wide) = 540
+  $column-count: 4;
+  $column-gutters: 2;
+  $container: 600 - (2 * $trim);
+
+  // Math: (540 - (2 * 30 gutter)) / 3 items = 160
+  $column-width: ($container - ($column-gutters * $product-column-spacing)) / $column-count;
+
+  .rel-products {
+    /* Undo two-column config */
+    > li:nth-child(odd) {
+      clear: none;
+    }
+    > li:nth-child(even) {
+      margin-right: percentage($product-column-spacing / $container);
+    }
+
+    /* Set three-column config */
+    > li {
+      width: percentage($column-width / $container);
+      margin-right: percentage($product-column-spacing / $container);
+    }
+    > li:nth-child(#{$column-count}n+1) {
+      clear: left;
+    }
+    > li:nth-child(#{$column-count}n) {
+      margin-right: 0;
+    }
+  }
+}
+
+
+@include bp(min-width, 960px) {
+  @include product-grid(4, 960);
+  @include product-grid(5, 960);
+  @include product-grid(6, 960);
+}
+
+.product-cart-price {
+  text-align: center;
+  padding-bottom: 0;
+  padding-top: 0;
+  color: $c-green;
+  font-weight: 500;
+  font-size: $f-size-l;
+  font-family: $f-stack-sans;
+}

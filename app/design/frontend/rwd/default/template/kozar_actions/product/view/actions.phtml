@@ -1,0 +1,36 @@
+<?php
+$actionViewUrl = Mage::getUrl('actions/index/view');
+$_product = $this->getProduct();
+$actions = Mage::getModel('kozar_actions/product')->getActionsCollection($_product->getId());
+$helper = Mage::helper('kozar_actions');
+?>
+
+<div>
+    <ol class="actions-list">
+        <?php foreach ($actions as $action): ?>
+                <li>
+                    <img class="action-image" src="<?php echo $helper->getImageUrl($action->getImage(), 200, 200) ?>">
+                    <div class="action-shop">
+                        <div class="action-to-product-name">
+                            <a href="<?php echo $action->getActionUrl(); ?>">
+                                <?php echo $action->getName(); ?>
+                            </a>
+                        </div>
+                        <div class="action-item">
+
+                            <div class="action-desc">
+                                Description: <?php echo $this->escapeHtml($action->getShortDescription()) ?>
+                            </div>
+                            <div class="action-time">
+                                <p>
+                                    Start: <?php echo $this->escapeHtml(Mage::getSingleton('core/date')->date(null, $action->getStartDatetime())) ?></p>
+                                <p><?php if ($action->getEndDatetime() !== null) echo 'End: ' . $this->escapeHtml(Mage::getSingleton('core/date')->date(null, $action->getEndDatetime())) ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+        <?php endforeach; ?>
+    </ol>
+</div>
+
+

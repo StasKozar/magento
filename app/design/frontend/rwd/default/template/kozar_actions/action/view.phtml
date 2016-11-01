@@ -1,0 +1,60 @@
+
+<?php /* @var $this Kozar_Actions_Block_Action_View*/?>
+<?php
+$blockProduct = Mage::getBlockSingleton('catalog/product_list');
+$action = $this->getActionsAction();
+$relatedProducts = $this->getActionProducts()
+    ->addFieldToFilter('visibility', array('neq' => Mage_Catalog_Model_Product_Visibility::VISIBILITY_NOT_VISIBLE));
+$hasRelatedProducts = count($relatedProducts) > 0;
+$helper = Mage::helper('kozar_actions');
+$_helper = Mage::helper('catalog/output');
+$price = Mage::getBlockSingleton('catalog/product_list');
+?>
+<div class="action-view">
+    <div class="action-image">
+        <img src="<?php echo $helper->getImageUrl($action->getImage(), 300, 300) ?>">
+    </div>
+    <div class="action-info">
+        <div class="action-name">
+            <h1><?php echo $action->getName(); ?></h1>
+        </div>
+        <div class="action-detail">
+            <div class="desc">
+                <p><?php echo $action->getDescription(); ?></p>
+            </div>
+            <div class="action-time">
+                <p><?php echo $this->__('Create:') ?> <?php echo Mage::getSingleton('core/date')->date(null, $action->getCreateDatetime()); ?></p>
+                <p><?php echo $this->__('Start:') ?> <?php echo Mage::getSingleton('core/date')->date(null, $action->getStartDatetime()); ?></p>
+                <p><?php if($action->getEnd_datetime() !== null) echo $this->__('End: ') . Mage::getSingleton('core/date')->date(null, $this->escapeHtml($action->getEndDatetime()))?></p>
+            </div>
+        </div>
+    </div>
+    <ul class="rel-products">
+        <?php if ($hasRelatedProducts): ?>
+            <h2 class="rel-products-top"><?php echo $this->__('Action Products:') ?></h2>
+            <?php foreach ($relatedProducts as $product): ?>
+                    <li>
+                        <a href="<?php echo $product->getProductUrl() ?>"
+                           title="<?php echo $blockProduct->stripTags($blockProduct->getImageLabel($product, 'small_image'), null, true) ?>"
+                           class="product-image">
+                            <img id="product-collection-image-<?php echo $product->getId(); ?>"
+                                 src="<?php echo $product->getImageUrl(); ?>"
+                                 alt="<?php echo $blockProduct->stripTags($blockProduct->getImageLabel($product, 'small_image'), null, true) ?>"/>
+                        </a>
+                        <div class="product-info">
+                            <h2 class="product-name"><a href="<?php echo $product->getProductUrl() ?>"
+                                                        title="<?php echo $blockProduct->stripTags($product->getName(), null, true) ?>"><?php echo $product->getName() ?></a>
+                            </h2>
+                            <p class="product-cart-sku">
+                                <?php echo $product->getSku() ?>
+                            </p>
+                            <div class="product-secondary">
+                                <?php echo $price->getPriceHtml($product, true)?>
+                            </div>
+                        </div>
+                    </li>
+            <?php endforeach; ?>
+        <?php endif ?>
+    </ul>
+</div>
+

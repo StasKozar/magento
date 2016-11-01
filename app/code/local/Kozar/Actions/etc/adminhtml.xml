@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <menu>
+        <kozar_actions module="kozar_actions" translate="title">
+            <title>Actions</title>
+            <sort_order>77</sort_order>
+            <action>adminhtml/action</action>
+        </kozar_actions>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <kozar_actions translate="title" module="kozar_actions">
+                        <title>Kozar_Actions</title>
+                        <sort_order>70</sort_order>
+                        <children>
+                            <actions translate="title">
+                                <title>Actions</title>
+                                <sort_order>0</sort_order>
+                                <children>
+                                    <save translate="title">
+                                        <title>Save Action</title>
+                                        <sort_order>10</sort_order>
+                                    </save>
+                                    <edit translate="title">
+                                        <title>Edit Action</title>
+                                        <sort_order>20</sort_order>
+                                    </edit>
+                                    <delete translate="title">
+                                        <title>Delete Action</title>
+                                        <sort_order>30</sort_order>
+                                    </delete>
+                                    <massDelete translate="title">
+                                        <title>Massdelete Action</title>
+                                        <sort_order>40</sort_order>
+                                    </massDelete>
+                                </children>
+                            </actions>
+                        </children>
+                    </kozar_actions>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <kozar_actions module="kozar_actions" translate="title">
+                                        <title>Action Management</title>
+                                        <sort_order>77</sort_order>
+                                    </kozar_actions>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                    <kozar_actions module="kozar_actions" translate="title">
+                        <title>Kozar_Actions</title>
+                        <sort_order>77</sort_order>
+                        <children>
+                            <actions module="kozar_actions" translate="title">
+                                <title>Actions</title>
+                                <sort_order>1000</sort_order>
+                            </actions>
+                        </children>
+                    </kozar_actions>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

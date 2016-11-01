@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <modules>
+        <Kozar_Actions>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Kozar_Actions>
+    </modules>
+</config>

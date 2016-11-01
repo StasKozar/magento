@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<layout version="0.0.1">
+    <kozar_actions_index_index>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="kozar_actions/action_list" name="action.list" template="kozar_actions/action/list.phtml" />
+        </reference>
+    </kozar_actions_index_index>
+
+    <kozar_actions_index_view>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="kozar_actions/action_view" name="action.view" template="kozar_actions/action/view.phtml" />
+        </reference>
+    </kozar_actions_index_view>
+
+    <catalog_product_view translate="label">
+            <reference name="product.info">
+                <block type="kozar_actions/product_view_actions" as="actions" name="product.actions"
+                       template="kozar_actions/product/view/actions.phtml">
+                    <action method="addToParentGroup"><group>detailed_info</group></action>
+                    <action method="setTitle" translate="value"><value>Actions</value></action>
+                </block>
+            </reference>
+    </catalog_product_view>
+</layout>
