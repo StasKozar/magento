@@ -29,7 +29,7 @@ $price = Mage::getBlockSingleton('catalog/product_list');
             </div>
         </div>
     </div>
-    <ul class="rel-products">
+    <ul class="products-grid products-grid--max-6-col">
         <?php if ($hasRelatedProducts): ?>
             <h2 class="rel-products-top"><?php echo $this->__('Action Products:') ?></h2>
             <?php foreach ($relatedProducts as $product): ?>
@@ -38,8 +38,8 @@ $price = Mage::getBlockSingleton('catalog/product_list');
                            title="<?php echo $blockProduct->stripTags($blockProduct->getImageLabel($product, 'small_image'), null, true) ?>"
                            class="product-image">
                             <img id="product-collection-image-<?php echo $product->getId(); ?>"
-                                 src="<?php echo $product->getImageUrl(); ?>"
-                                 alt="<?php echo $blockProduct->stripTags($blockProduct->getImageLabel($product, 'small_image'), null, true) ?>"/>
+                                 src="<?php echo $blockProduct->helper('catalog/image')->init($product, 'small_image'); ?>"
+                                 alt="<?php echo $blockProduct->stripTags($this->getImageLabel($product, 'small_image'), null, true) ?>" />
                         </a>
                         <div class="product-info">
                             <h2 class="product-name"><a href="<?php echo $product->getProductUrl() ?>"

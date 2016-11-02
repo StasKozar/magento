@@ -15,7 +15,7 @@ class Kozar_Actions_Model_Action extends Mage_Core_Model_Abstract
         $this->_init('kozar_actions/action');
     }
 
-    protected function _beforeLoad($id)
+    protected function _beforeLoad($id, $field = null)
     {
         $helper = Mage::helper('kozar_actions');
         $helper->convertToLocal($this);
@@ -43,7 +43,7 @@ class Kozar_Actions_Model_Action extends Mage_Core_Model_Abstract
 
     public function getProducts()
     {
-        return Kozar_Actions_Model_Resource_Action::getProductsCollection($this);
+        return Mage::getResourceModel('kozar_actions/action')->getProductsCollection($this);//Kozar_Actions_Model_Resource_Action::getProductsCollection($this);
     }
 
     public function getActionUrl()

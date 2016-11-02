@@ -69,32 +69,14 @@ class Kozar_Actions_Block_Adminhtml_Action_Edit_Tab_Product extends Mage_Adminht
             'header' => $helper->__('Status'),
             'index' => 'status',
             'type' => 'options',
-            'values' => array(
-                Mage_Catalog_Model_Product_Status::STATUS_ENABLED => 'Enable',
-                Mage_Catalog_Model_Product_Status::STATUS_DISABLED => 'Disable',
-                ),
-            'options' => array(
-                Mage_Catalog_Model_Product_Status::STATUS_ENABLED => 'Enable',
-                Mage_Catalog_Model_Product_Status::STATUS_DISABLED => 'Disable',
-                ),
+            'options' => Mage_Catalog_Model_Product_Status::getOptionArray(),
         ));
 
         $this->addColumn('ajax_grid_visibility', array(
             'header' => $helper->__('Visibility'),
             'index' => 'visibility',
             'type' => 'options',
-            'values' => array(
-                Mage_Catalog_Model_Product_Visibility::VISIBILITY_NOT_VISIBLE => 'Not visible',
-                Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_CATALOG => 'In Catalog',
-                Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_SEARCH => 'In Search',
-                Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH => 'Both'
-            ),
-            'options' => array(
-                Mage_Catalog_Model_Product_Visibility::VISIBILITY_NOT_VISIBLE => 'Not visible',
-                Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_CATALOG => 'In Catalog',
-                Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_SEARCH => 'In Search',
-                Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH => 'Both'
-            ),
+            'options' => Mage_Catalog_Model_Product_Visibility::getOptionArray(),
         ));
 
         $this->addColumn('ajax_grid_sku', array(
@@ -133,7 +115,7 @@ class Kozar_Actions_Block_Adminhtml_Action_Edit_Tab_Product extends Mage_Adminht
             $selectedProducts = Mage::app()->getRequest()->getParam('selected_products', null);
             if(is_null($selectedProducts) || !is_array($selectedProducts)){
                 $action = Mage::registry('current_action');
-                $selectedProducts = $action->getProducts()->getAllIds();
+                $selectedProducts = $action->getProducts()->getColumnValues('entity_id');
             }
             $this->_data['selected_products'] = $selectedProducts;
         }

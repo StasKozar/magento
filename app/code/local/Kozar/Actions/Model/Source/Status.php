@@ -6,7 +6,7 @@
  * Date: 28/10/2016
  * Time: 13:15
  */
-class Kozar_Actions_Model_Source_Boolean extends Mage_Eav_Model_Entity_Attribute_Source_Abstract
+class Kozar_Actions_Model_Source_Status extends Mage_Eav_Model_Entity_Attribute_Source_Abstract
 {
     const UNAVAILABLE_ACTION = 1;
     const OPEN_ACTION = 2;

@@ -22,7 +22,7 @@ class Kozar_Actions_Model_Product extends Mage_Core_Model_Abstract
             ->getColumnValues('action_id');
 
         $collection = Mage::getModel('kozar_actions/action')->getCollection()
-            ->addFieldToFilter('status', Kozar_Actions_Model_Source_Boolean::OPEN_ACTION);
+            ->addFieldToFilter('status', Kozar_Actions_Model_Source_Status::OPEN_ACTION);
         if(count($relActionCollection) > 0){
             $collection->addFieldToFilter('id', array('in' => $relActionCollection));
         }else{

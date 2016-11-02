@@ -26,8 +26,8 @@ class Kozar_Actions_Block_Adminhtml_Action_Grid extends Mage_Adminhtml_Block_Wid
     {
         $dateFormatIso = Mage::app()->getLocale()->getDateTimeFormat(Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
         $helper = Mage::helper('kozar_actions');
-        $entitySource = new Mage_Eav_Model_Entity_Attribute_Source_Boolean();
-        $actionSource = new Kozar_Actions_Model_Source_Boolean();
+        $actionSource = Mage::getModel('kozar_actions/source_status');
+        $entitySource = Mage::getModel('eav/entity_attribute_source_boolean');
 
         $this->addColumn('id', array(
             'header' => $helper->__('ID'),

@@ -31,18 +31,19 @@ class Kozar_Actions_Model_Observer extends Mage_Core_Model_Abstract
     {
         $collection = Mage::getModel('kozar_actions/action')->getCollection();
         $model = Mage::getModel('kozar_actions/action');
+        $actionStatus = Mage::getModel('kozar_actions/source_status');
         $gmtDate = Mage::getModel('core/date')->gmtDate();
 
         foreach ($collection as $item){
             if (strtotime($item->getEndDatetime()) < strtotime($gmtDate)) {
-                $model->load($item->getId())->setStatus($model::CLOSED_ACTION)->save();
+                $model->load($item->getId())->setStatus($actionStatus::CLOSED_ACTION)->save();
             } elseif (strtotime($item->getStartDatetime()) < strtotime($gmtDate)) {
 
-                $model->load($item->getId())->setStatus($model::OPEN_ACTION)->save();
+                $model->load($item->getId())->setStatus($actionStatus::OPEN_ACTION)->save();
 
             } elseif (strtotime($item->getStartDatetime()) > strtotime($gmtDate)) {
 
-                $model->load($item->getId())->setStatus($model::UNAVAILABLE_ACTION)->save();
+                $model->load($item->getId())->setStatus($actionStatus::UNAVAILABLE_ACTION)->save();
             }
         }
 

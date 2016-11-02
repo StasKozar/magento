@@ -80,17 +80,6 @@
             </adminhtml>
         </routers>
     </admin>
-    <!--<admin>
-        <routers>
-            <kozar_actions_admin>
-                <use>admin</use>
-                <args>
-                    <module>Kozar_Actions</module>
-                    <frontName>kozar_actions_admin</frontName>
-                </args>
-            </kozar_actions_admin>
-        </routers>
-    </admin>-->
     <crontab>
         <jobs>
             <kozar_actions>

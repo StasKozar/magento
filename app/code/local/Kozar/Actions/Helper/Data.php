@@ -36,7 +36,7 @@ class Kozar_Actions_Helper_Data extends Mage_Core_Helper_Abstract
         return $this;
     }
 
-    public function getImageUrl($image, $width, $height)
+    public function getImageUrl($image, $width=null, $height=null)
     {
         $folderUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'kozar_actions/';
         $imageUrl = $folderUrl . $image;
@@ -88,7 +88,7 @@ class Kozar_Actions_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     public function setStatus($data){
-        $actionSource = new Kozar_Actions_Model_Source_Boolean();
+        $actionSource = Mage::getModel('kozar_actions/source_status');
         $gmtDate = Mage::getModel('core/date')->gmtDate();
 
         if (strtotime($data->getEndDatetime()) < strtotime($gmtDate)) {

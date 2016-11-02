@@ -26,7 +26,7 @@ class Kozar_Actions_IndexController extends Mage_Core_Controller_Front_Action
             ->addAttributeToSelect('price')
             ->addAttributeToSelect('sku');
 
-        if($action->isObjectNew() || $action->getStatus() != Kozar_Actions_Model_Source_Boolean::OPEN_ACTION){
+        if($action->isObjectNew() || $action->getStatus() != Kozar_Actions_Model_Source_Status::OPEN_ACTION){
             return $this->norouteAction();
         }
 

@@ -14,7 +14,7 @@ class Kozar_Actions_Block_Action_List extends Mage_Core_Block_Template
         $collection = Mage::getModel('kozar_actions/action')->getCollection();
 
         $collection->addFieldToFilter('is_active', true)
-            ->addFieldToFilter('status', 2)
+            ->addFieldToFilter('status', Kozar_Actions_Model_Source_Status::OPEN_ACTION)
             ->setOrder('start_datetime', 'DESC');
 
         $this->setCollection($collection);

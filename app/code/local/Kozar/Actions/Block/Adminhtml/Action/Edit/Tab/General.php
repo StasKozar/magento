@@ -13,8 +13,8 @@ class Kozar_Actions_Block_Adminhtml_Action_Edit_Tab_General extends Mage_Adminht
     {
         $helper = Mage::helper('kozar_actions');
         $model = Mage::registry('current_action');
-        $actionSource = new Kozar_Actions_Model_Source_Boolean();
-        $entitySource = new Mage_Eav_Model_Entity_Attribute_Source_Boolean();
+        $actionSource = Mage::getModel('kozar_actions/source_status');
+        $entitySource = Mage::getModel('eav/entity_attribute_source_boolean');
         $dateFormatIso = Mage::app()->getLocale()->getDateTimeFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT);
 
         $form = new Varien_Data_Form();
