@@ -1,0 +1,33 @@
+
+<?php /* @var $this Kozar_Actions_Block_Action_View*/?>
+<?php
+$request = $this->getRequestGet();
+//var_dump($request);
+//die();
+$relatedRequests = $this->getRelativeRequest();
+//foreach ($relatedRequests as $item){
+//    var_dump($item);
+//}
+//die();
+$hasRelatedRequest = count($relatedRequests) > 0;
+$helper = Mage::helper('tsg_request');
+?>
+<div>
+    <h3><?php echo $request->getUrl() ?></h3>
+
+</div>
+<canvas id="canvas" width="150" height="150"></canvas>
+<script>
+    var canvas = document.getElementById("canvas");
+    if (canvas.getContext) {
+        var ctx = canvas.getContext("2d");
+
+        ctx.fillStyle = "rgb(200,0,0)";
+        ctx.fillRect(10, 10, 50, 50);
+
+        ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+        ctx.fillRect(30, 30, 50, 50);
+    }
+</script>
+
+

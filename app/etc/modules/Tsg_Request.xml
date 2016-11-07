@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <modules>
+        <Tsg_Request>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Tsg_Request>
+    </modules>
+</config>
