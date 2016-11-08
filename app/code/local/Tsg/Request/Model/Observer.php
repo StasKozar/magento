@@ -39,35 +39,15 @@ class Tsg_Request_Model_Observer extends Mage_Core_Model_Abstract
             $age = substr($data, strpos($data, 'Age'));
             $age = strstr($age, 'Via', true);
             $age = trim($age);
+            $age = explode(': ', $age);
+            $age = (int) $age[1];
             $data = array(
                 'url_id' => $item->getEntityId(),
                 'age' => $age,
                 'request_datetime' => Mage::getModel('core/date')->date(),
             );
             $modelRelative->setData($data);
-            var_dump($age);
-        }
-
-        /*echo '<pre>';
-        print_r($data);
-        echo '</pre>';*/
-
-        if($data === false){
-            return false;
-        }
-        $data = preg_split('/^r&$/m', $data, 2);
-
-        $data = trim($data[0]);
-
-
-        $curl->close();
-
-        die();
-
-        try{
-            $xml = new SimpleXMLElement($data);
-        }catch (Exception $e){
-            echo $e->getMessage();
+            $modelRelative->save();
         }
     }
 }

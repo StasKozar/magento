@@ -2,32 +2,91 @@
 <?php /* @var $this Kozar_Actions_Block_Action_View*/?>
 <?php
 $request = $this->getRequestGet();
-//var_dump($request);
-//die();
 $relatedRequests = $this->getRelativeRequest();
-//foreach ($relatedRequests as $item){
-//    var_dump($item);
-//}
-//die();
 $hasRelatedRequest = count($relatedRequests) > 0;
 $helper = Mage::helper('tsg_request');
 ?>
 <div>
-    <h3><?php echo $request->getUrl() ?></h3>
-
-</div>
-<canvas id="canvas" width="150" height="150"></canvas>
-<script>
-    var canvas = document.getElementById("canvas");
-    if (canvas.getContext) {
-        var ctx = canvas.getContext("2d");
-
-        ctx.fillStyle = "rgb(200,0,0)";
-        ctx.fillRect(10, 10, 50, 50);
-
-        ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-        ctx.fillRect(30, 30, 50, 50);
+    <?php
+    $arrayOfAges = array();
+    $i = 0;
+    foreach ($relatedRequests as $item){
+        /*var_dump($item->getRequestDatetime());
+        die();*/
+        $arrayOfAges[] = (int)$item->getAge();
     }
-</script>
+    $height = floor($arrayOfAges[0]/max($arrayOfAges) * 550);
+    $width = floor(100/count($arrayOfAges));
+    $i = 0;
+    ?>
+    <h3><?php echo $request->getUrl() ?></h3>
+    <form method="post">
+        <select name="step">
+            <option value="5">5 хв.</option>
+            <option value="10">10 хв.</option>
+            <option value="15">15 хв.</option>
+            <option value="30">30 хв.</option>
+            <option value="45">45 хв.</option>
+            <option value="60">60 хв.</option>
+        </select>
+        <input type="submit" value="Choose">
+    </form>
 
+    <?php
+    $step = (int)Mage::app()->getRequest()->getParam('step', 0);
+    $day = 24*60;
+    $steps = array();
+    for($j = 0; $j < $day/$step; $j++){
+        $steps[] = $step * $j;
+    }
+    $width = 70;
+    ?>
 
+    <div style="height: 600px; width:1000px; border: solid black 2px;" class="grafic scroller">
+        <?php foreach ($steps as $item): ?>
+        <div style="height: 50px;
+            margin-left:<?php echo $i*$width; $i++; ?>px;
+            width:<?php echo $width; ?>px;
+            background:blue;
+            border: 1px solid black" >
+            <p style="text-align: center; color: white">
+                <?php echo $item;?>
+            </p>
+        </div>
+        <?php endforeach; ?>
+    </div>
+
+    <!--<div>Age</div>
+    <div style="height: 600px; width:100%; border: solid black 2px;" class="grafic">
+        <?php /*foreach ($relatedRequests as $item): */?>
+            <div style="height: <?php /*echo (int)$item->getAge()/max($arrayOfAges) * 550; */?>px;
+                margin-left:<?php /*echo $i*$width; $i++; */?>%;
+                width:<?php /*echo $width; */?>%;
+                background:blue;
+                border: 1px solid black" >
+                <p style="text-align: center; color: white">
+                    <?php /*echo $item->getAge();*/?>
+                </p>
+            </div>
+            <p><?php /*echo $item->getRequestDatetime() */?></p>
+        <?php /*endforeach; */?>
+    </div>
+    <div style="float: right">Datetime</div>
+</div>-->
+
+<style type="text/css">
+    .grafic {
+        position: relative;
+    }
+    .grafic div
+    {
+        float: left;
+        position: absolute;
+        bottom: 0px;
+    }
+    .scroller {
+        overflow: scroll;
+        padding: 5px;
+        height: 100%;
+    }
+</style>
