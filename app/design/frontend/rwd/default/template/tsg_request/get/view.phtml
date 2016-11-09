@@ -7,82 +7,97 @@ $hasRelatedRequest = count($relatedRequests) > 0;
 $helper = Mage::helper('tsg_request');
 ?>
 <div>
-    <?php
-    $arrayOfAges = array();
-    $i = 0;
-    foreach ($relatedRequests as $item){
-        /*var_dump($item->getRequestDatetime());
-        die();*/
-        $arrayOfAges[] = (int)$item->getAge();
-    }
-    $height = floor($arrayOfAges[0]/max($arrayOfAges) * 550);
-    $width = floor(100/count($arrayOfAges));
-    $i = 0;
-    ?>
     <h3><?php echo $request->getUrl() ?></h3>
-    <form method="post">
+    <form method="post" name="select">
         <select name="step">
-            <option value="5">5 хв.</option>
-            <option value="10">10 хв.</option>
-            <option value="15">15 хв.</option>
-            <option value="30">30 хв.</option>
-            <option value="45">45 хв.</option>
-            <option value="60">60 хв.</option>
+            <option value="5" <?php if(isset($_POST['step'])){
+                    if($_POST['step'] == 5)
+                        echo ' selected="selected"';
+                } ?>>5 хв.</option>
+            <option value="10" <?php if(isset($_POST['step'])){
+                if($_POST['step'] == 10)
+                    echo ' selected="selected"';
+            } ?>>10 хв.</option>
+            <option value="15" <?php if(isset($_POST['step'])){
+                if($_POST['step'] == 15)
+                    echo ' selected="selected"';
+            } ?>>15 хв.</option>
+            <option value="30" <?php if(isset($_POST['step'])){
+                if($_POST['step'] == 30)
+                    echo ' selected="selected"';
+            } ?>>30 хв.</option>
+            <option value="45" <?php if(isset($_POST['step'])){
+                if($_POST['step'] == 45)
+                    echo ' selected="selected"';
+            } ?>>45 хв.</option>
+            <option value="60" <?php if(isset($_POST['step'])){
+                if($_POST['step'] == 60)
+                    echo ' selected="selected"';
+            } ?>>60 хв.</option>
         </select>
         <input type="submit" value="Choose">
     </form>
 
     <?php
     $step = (int)Mage::app()->getRequest()->getParam('step', 0);
-    $day = 24*60;
-    $steps = array();
-    for($j = 0; $j < $day/$step; $j++){
-        $steps[] = $step * $j;
-    }
+    $steps = $helper->generateSteps($step);
     $width = 70;
+    $relatedRequests = $helper->groupRequestsByDate($relatedRequests);
+    $arrayOfAges = $helper->generateAvgAgePerStep($relatedRequests, $steps);
+    $maxAge = $helper->getMaxAge($arrayOfAges);
+    $i = 0;
     ?>
-
-    <div style="height: 600px; width:1000px; border: solid black 2px;" class="grafic scroller">
-        <?php foreach ($steps as $item): ?>
-        <div style="height: 50px;
-            margin-left:<?php echo $i*$width; $i++; ?>px;
-            width:<?php echo $width; ?>px;
-            background:blue;
-            border: 1px solid black" >
-            <p style="text-align: center; color: white">
-                <?php echo $item;?>
-            </p>
-        </div>
+    <div>Age</div>
+    <div style="height: 600px; width:100%; border: solid black 2px;" class="grafic scroller">
+        <?php foreach ($arrayOfAges as $date => $value): ?>
+            <?php foreach ($steps as $step): ?>
+                <div style="height: 30px;
+                    margin-left:<?php echo $i++ * $width; ?>px;
+                    width:<?php echo $width; ?>px;
+                    background:blue;
+                    border: 1px solid black">
+                    <?php if (key_exists($step, $arrayOfAges[$date])): ?>
+                        <div class="age" style="height:<?php echo $arrayOfAges[$date][$step] / $maxAge * 450; ?>px;
+                            background: red;
+                            width: <?php echo $width ?>px">
+                            <p><?php echo $arrayOfAges[$date][$step] ?></p>
+                        </div>
+                        <p>
+                            <?php echo $step; ?>
+                        </p>
+                    <?php else: ?>
+                        <p>
+                            <?php echo $step; ?>
+                        </p>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
         <?php endforeach; ?>
     </div>
-
-    <!--<div>Age</div>
-    <div style="height: 600px; width:100%; border: solid black 2px;" class="grafic">
-        <?php /*foreach ($relatedRequests as $item): */?>
-            <div style="height: <?php /*echo (int)$item->getAge()/max($arrayOfAges) * 550; */?>px;
-                margin-left:<?php /*echo $i*$width; $i++; */?>%;
-                width:<?php /*echo $width; */?>%;
-                background:blue;
-                border: 1px solid black" >
-                <p style="text-align: center; color: white">
-                    <?php /*echo $item->getAge();*/?>
-                </p>
-            </div>
-            <p><?php /*echo $item->getRequestDatetime() */?></p>
-        <?php /*endforeach; */?>
-    </div>
     <div style="float: right">Datetime</div>
-</div>-->
 
 <style type="text/css">
     .grafic {
         position: relative;
+        text-align: center;
+        color: white;
     }
     .grafic div
     {
         float: left;
         position: absolute;
         bottom: 0px;
+    }
+    .age {
+        position: absolute;
+        margin-bottom: 30px;
+        border: 1px solid black;
+    }
+    .age p{
+        position: absolute;
+        bottom: 101%;
+        left: 30%;
+        color: black;
     }
     .scroller {
         overflow: scroll;

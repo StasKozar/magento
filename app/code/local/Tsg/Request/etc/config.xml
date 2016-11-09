@@ -59,4 +59,16 @@
             </updates>
         </layout>
     </frontend>
+    <crontab>
+        <jobs>
+            <kozar_actions>
+                <schedule>
+                    <cron_expr>* * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>tsg_request/observer::sendRequest</model>
+                </run>
+            </kozar_actions>
+        </jobs>
+    </crontab>
 </config>
