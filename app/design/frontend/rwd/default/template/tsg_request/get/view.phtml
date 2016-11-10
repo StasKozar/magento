@@ -1,0 +1,81 @@
+<?php /* @var $this Kozar_Actions_Block_Action_View*/?>
+<?php
+$request = $this->getRequestGet();
+$relatedRequests = $this->getRelativeRequest();
+$hasRelatedRequest = count($relatedRequests) > 0;
+$relatedRequests = $this->groupRequestsByDate($relatedRequests);
+?>
+<div>
+    <h3><?php echo $request->getUrl() ?></h3>
+    <form method="post" name="select">
+        <p><?php echo $this->__('Початок')?><input type="date" name="from"></p>
+        <p><?php echo $this->__('Кінець')?><input type="date" name="to"></p>
+        <select name="step">
+            <?php $this->generatePeriodSelect() ?>
+        </select>
+        <input type="submit" value="Choose">
+    </form>
+
+    <?php
+    $steps = $this->generateSteps();
+    $width = 100;
+    $arrayOfAges = $this->generateAvgAgePerStep($relatedRequests, $steps);
+    $maxAge = $this->getMaxAge($arrayOfAges);
+    $i = 0;
+    ?>
+
+    <div style="height: 600px; width:100%; border: solid black 2px;" class="grafic" id="scroll">
+        <?php foreach ($arrayOfAges as $date => $value): ?>
+            <?php foreach ($steps as $step): ?>
+                    <?php if (key_exists($step, $arrayOfAges[$date])): ?>
+                    <div style="height: 50px;
+                        margin-left:<?php echo $i++ * $width; ?>px;
+                        width:<?php echo $width; ?>px;
+                        background:blue;
+                        border: 1px solid black">
+                        <div class="age" style="height:<?php echo $arrayOfAges[$date][$step]['age'] / $maxAge * 450; ?>px;
+                            width: <?php echo $width ?>px">
+                            <p><?php echo $arrayOfAges[$date][$step]['age'] . $this->__('с') ?></p>
+                        </div>
+                        <p>
+                            <?php echo $arrayOfAges[$date][$step]['date']; ?>
+                        </p>
+                    </div>
+                    <?php endif; ?>
+            <?php endforeach; ?>
+        <?php endforeach; ?>
+    </div>
+
+<style type="text/css">
+    .grafic {
+        position: relative;
+        text-align: center;
+        color: white;
+        overflow: scroll;
+        padding: 5px;
+        height: 100%;
+    }
+    .grafic div
+    {
+        float: left;
+        position: absolute;
+        bottom: 0px;
+    }
+    .age {
+        position: absolute;
+        margin-bottom: 50px;
+        border: 1px solid black;
+        background: red;
+    }
+    .age p{
+        position: absolute;
+        bottom: 101%;
+        left: 30%;
+        color: black;
+    }
+</style>
+
+    <script>
+        var objDiv = document.getElementById("scroll");
+        objDiv.scrollLeft = objDiv.scrollWidth;
+    </script>
