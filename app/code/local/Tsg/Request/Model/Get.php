@@ -17,6 +17,14 @@ class Tsg_Request_Model_Get extends Mage_Core_Model_Abstract
 
     public function getRelativeRequests()
     {
-        return  Mage::getResourceModel('tsg_request/get')->getRelativeCollection($this);
+        $helper = Mage::helper('tsg_request');
+        $collection =  Mage::getResourceModel('tsg_request/get')
+            ->getRelativeCollection($this);
+
+        foreach ($collection as $value){
+            $helper->convertToLocal($value);
+        }
+
+        return $collection;
     }
 }

@@ -63,7 +63,7 @@
         <jobs>
             <kozar_actions>
                 <schedule>
-                    <cron_expr>* * * * *</cron_expr>
+                    <cron_expr>*/5 * * * *</cron_expr>
                 </schedule>
                 <run>
                     <model>tsg_request/observer::sendRequest</model>

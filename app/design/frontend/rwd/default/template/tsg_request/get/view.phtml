@@ -1,86 +1,59 @@
-
 <?php /* @var $this Kozar_Actions_Block_Action_View*/?>
 <?php
 $request = $this->getRequestGet();
 $relatedRequests = $this->getRelativeRequest();
 $hasRelatedRequest = count($relatedRequests) > 0;
-$helper = Mage::helper('tsg_request');
+$relatedRequests = $this->groupRequestsByDate($relatedRequests);
 ?>
 <div>
     <h3><?php echo $request->getUrl() ?></h3>
     <form method="post" name="select">
+        <p><?php echo $this->__('Початок')?><input type="date" name="from"></p>
+        <p><?php echo $this->__('Кінець')?><input type="date" name="to"></p>
         <select name="step">
-            <option value="5" <?php if(isset($_POST['step'])){
-                    if($_POST['step'] == 5)
-                        echo ' selected="selected"';
-                } ?>>5 хв.</option>
-            <option value="10" <?php if(isset($_POST['step'])){
-                if($_POST['step'] == 10)
-                    echo ' selected="selected"';
-            } ?>>10 хв.</option>
-            <option value="15" <?php if(isset($_POST['step'])){
-                if($_POST['step'] == 15)
-                    echo ' selected="selected"';
-            } ?>>15 хв.</option>
-            <option value="30" <?php if(isset($_POST['step'])){
-                if($_POST['step'] == 30)
-                    echo ' selected="selected"';
-            } ?>>30 хв.</option>
-            <option value="45" <?php if(isset($_POST['step'])){
-                if($_POST['step'] == 45)
-                    echo ' selected="selected"';
-            } ?>>45 хв.</option>
-            <option value="60" <?php if(isset($_POST['step'])){
-                if($_POST['step'] == 60)
-                    echo ' selected="selected"';
-            } ?>>60 хв.</option>
+            <?php $this->generatePeriodSelect() ?>
         </select>
         <input type="submit" value="Choose">
     </form>
 
     <?php
-    $step = (int)Mage::app()->getRequest()->getParam('step', 0);
-    $steps = $helper->generateSteps($step);
-    $width = 70;
-    $relatedRequests = $helper->groupRequestsByDate($relatedRequests);
-    $arrayOfAges = $helper->generateAvgAgePerStep($relatedRequests, $steps);
-    $maxAge = $helper->getMaxAge($arrayOfAges);
+    $steps = $this->generateSteps();
+    $width = 100;
+    $arrayOfAges = $this->generateAvgAgePerStep($relatedRequests, $steps);
+    $maxAge = $this->getMaxAge($arrayOfAges);
     $i = 0;
     ?>
-    <div>Age</div>
-    <div style="height: 600px; width:100%; border: solid black 2px;" class="grafic scroller">
+
+    <div style="height: 600px; width:100%; border: solid black 2px;" class="grafic" id="scroll">
         <?php foreach ($arrayOfAges as $date => $value): ?>
             <?php foreach ($steps as $step): ?>
-                <div style="height: 30px;
-                    margin-left:<?php echo $i++ * $width; ?>px;
-                    width:<?php echo $width; ?>px;
-                    background:blue;
-                    border: 1px solid black">
                     <?php if (key_exists($step, $arrayOfAges[$date])): ?>
-                        <div class="age" style="height:<?php echo $arrayOfAges[$date][$step] / $maxAge * 450; ?>px;
-                            background: red;
+                    <div style="height: 50px;
+                        margin-left:<?php echo $i++ * $width; ?>px;
+                        width:<?php echo $width; ?>px;
+                        background:blue;
+                        border: 1px solid black">
+                        <div class="age" style="height:<?php echo $arrayOfAges[$date][$step]['age'] / $maxAge * 450; ?>px;
                             width: <?php echo $width ?>px">
-                            <p><?php echo $arrayOfAges[$date][$step] ?></p>
+                            <p><?php echo $arrayOfAges[$date][$step]['age'] . $this->__('с') ?></p>
                         </div>
                         <p>
-                            <?php echo $step; ?>
+                            <?php echo $arrayOfAges[$date][$step]['date']; ?>
                         </p>
-                    <?php else: ?>
-                        <p>
-                            <?php echo $step; ?>
-                        </p>
+                    </div>
                     <?php endif; ?>
-                </div>
             <?php endforeach; ?>
         <?php endforeach; ?>
     </div>
-    <div style="float: right">Datetime</div>
 
 <style type="text/css">
     .grafic {
         position: relative;
         text-align: center;
         color: white;
+        overflow: scroll;
+        padding: 5px;
+        height: 100%;
     }
     .grafic div
     {
@@ -90,8 +63,9 @@ $helper = Mage::helper('tsg_request');
     }
     .age {
         position: absolute;
-        margin-bottom: 30px;
+        margin-bottom: 50px;
         border: 1px solid black;
+        background: red;
     }
     .age p{
         position: absolute;
@@ -99,9 +73,9 @@ $helper = Mage::helper('tsg_request');
         left: 30%;
         color: black;
     }
-    .scroller {
-        overflow: scroll;
-        padding: 5px;
-        height: 100%;
-    }
 </style>
+
+    <script>
+        var objDiv = document.getElementById("scroll");
+        objDiv.scrollLeft = objDiv.scrollWidth;
+    </script>

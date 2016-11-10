@@ -8,15 +8,16 @@
  */
 class Tsg_Request_Block_Get_List extends Mage_Core_Block_Template
 {
-    public function __construct(array $args)
+    protected $_getCollection = null;
+
+    public function getGetCollection()
     {
-        parent::__construct();
-        $collection = Mage::getModel('tsg_request/get')->getCollection();
+        if (is_null($this->_getCollection)) {
+            $this->_getCollection = Mage::getModel('tsg_request/get')
+                ->getCollection()
+                ->addFieldToFilter('is_active', true);
+        }
 
-        $collection->addFieldToFilter('is_active', true);
-
-        $this->setCollection($collection);
-
-        return $this;
+        return $this->_getCollection;
     }
 }
